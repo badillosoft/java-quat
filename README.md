@@ -2,7 +2,7 @@
 
 Instructor: Alan Badillo Salas (badillo.soft@hotmail.com)
 
-## Sesión 1 - Introducción a Java
+## Sesión 1 - Introducción a Java
 
 En está sesión revisamos los aspectos más importantes para la creación de *Clases* y *Objetos* y la teoría subyacente. Una *clase* como vimos, constiste en describir la estructura de los *objetos*, es decir, qué atributos y métodos deberán tener para interacturar con otros *objetos* en un programa. Los **atributos** de un *objeto* se corresponden a variables del lenguaje definidos dentro de la clase, por ejemplo, si deseamos un atributo del *objeto* llamado `nombre` para almacenar el nombre del *objeto*, deberemos crear una variable de tipo `String` como `String nombre;`.
 
