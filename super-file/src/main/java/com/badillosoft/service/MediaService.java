@@ -27,8 +27,6 @@ public class MediaService {
 		
 		String filename = String.format("/quat/files/%s", randomName); 
 		
-		file.getSize();
-		
 		file.transferTo(new File(filename));
 		
 		Media media = new Media();
