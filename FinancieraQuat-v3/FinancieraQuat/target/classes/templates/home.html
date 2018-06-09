@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Compressed CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.4.3/dist/css/foundation.min.css" integrity="sha256-GSio8qamaXapM8Fq9JYdGNTvk/dgs+cMLgPeevOYEx0= sha384-wAweiGTn38CY2DSwAaEffed6iMeflc0FMiuptanbN4J+ib+342gKGpvYRWubPd/+ sha512-QHEb6jOC8SaGTmYmGU19u2FhIfeG+t/hSacIWPpDzOp5yygnthL3JwnilM7LM1dOAbJv62R+/FICfsrKUqv4Gg==" crossorigin="anonymous">
+<style>
+	.ajustado {
+		max-width: 600px;
+		margin: auto;
+	}
+</style>
+</head>
+<body>
+
+	<div class="ajustado">
+		<h2>Nuevo Empleado</h2>
+		<form action="#" th:action="@{/api/empleado}" th:object="${empleadoNuevoForm}" method="post" >
+			<input type="hidden" id="redirect" name="redirect" value="/home">
+			<label th:for="${#ids.next('adoNombre')}">Nombre</label>
+			<input type="text" th:field="*{adoNombre}" placeholder="Nombre">
+			<label th:for="${#ids.next('adoApPaterno')}">Apellido Paterno</label>
+			<input type="text" th:field="*{adoApPaterno}" placeholder="Apellido Parterno">
+			<label th:for="${#ids.next('adoApMaterno')}">Apellido Materno</label>
+			<input type="text" th:field="*{adoApMaterno}" placeholder="Apellido Materno">
+			<input type="submit" value="enviar" class="button large">
+		</form>
+	</div>
+	<div class="ajustado">
+		<h2>Empleados</h2>
+		<table>
+			<tr>
+				<th>ID</th>
+				<th>Nombre</th>
+				<th>Género</th>
+				<th>Fecha de Nacimiento</th>
+			</tr>
+			<tr th:each="empleado : ${empleados}">
+				<td th:text="${empleado.adoId}" />
+				<td th:text="${empleado.adoNombre} + ' ' + ${empleado.adoApPaterno} + ' ' + ${empleado.adoApMaterno}" />
+				<td th:text="${empleado.adoGenero}" />
+				<td th:text="${empleado.adoFechaNacimiento}" />
+			</tr>
+		</table>
+	</div>
+	
+	<!-- Compressed JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.4.3/dist/js/foundation.min.js" integrity="sha256-mRYlCu5EG+ouD07WxLF8v4ZAZYCA6WrmdIXyn1Bv9Vk= sha384-KzKofw4qqetd3kvuQ5AdapWPqV1ZI+CnfyfEwZQgPk8poOLWaabfgJOfmW7uI+AV sha512-0gHfaMkY+Do568TgjJC2iMAV0dQlY4NqbeZ4pr9lVUTXQzKu8qceyd6wg/3Uql9qA2+3X5NHv3IMb05wb387rA==" crossorigin="anonymous"></script>
+</body>
+</html>

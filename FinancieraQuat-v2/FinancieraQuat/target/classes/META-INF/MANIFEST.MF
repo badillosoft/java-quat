@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Implementation-Title: FinancieraQuat
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: alan
+Built-By: kmmx
 Implementation-Vendor-Id: com.quat
 Build-Jdk: 1.8.0_112
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo

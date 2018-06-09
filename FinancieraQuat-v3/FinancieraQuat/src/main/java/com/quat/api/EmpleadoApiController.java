@@ -1,5 +1,9 @@
 package com.quat.api;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,7 +35,7 @@ public class EmpleadoApiController {
 	@Autowired
 	ProyectoService proyectoService;
 
-	@PutMapping("")
+	@PostMapping("")
 	/*
 	 * Este seria el caso de no contar con @ModelAttribute public EmpleadoDTO
 	 * registrarEmpleado(@RequestParam String adoNombre,
@@ -64,8 +69,14 @@ public class EmpleadoApiController {
 	 * 
 	 * }
 	 */
-	public EmpleadoDTO registrarEmpleado(@ModelAttribute EmpleadoDTO empleado) {
-		return empleadoService.registrarEmpleado(empleado);
+	public EmpleadoDTO registrarEmpleado(@ModelAttribute EmpleadoDTO empleado, @RequestParam(required=false) String redirect, HttpServletResponse response) throws IOException {
+		EmpleadoDTO empleadoNuevo = empleadoService.registrarEmpleado(empleado);
+		
+		if (redirect != null) {
+			response.sendRedirect(redirect);
+		}
+		
+		return empleadoNuevo;
 	}
 
 	// Asignar una nomina mediante el id del empleado
