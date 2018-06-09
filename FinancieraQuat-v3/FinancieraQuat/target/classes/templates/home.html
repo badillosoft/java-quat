@@ -2,50 +2,128 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Financiera Quat</title>
 <!-- Compressed CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.4.3/dist/css/foundation.min.css" integrity="sha256-GSio8qamaXapM8Fq9JYdGNTvk/dgs+cMLgPeevOYEx0= sha384-wAweiGTn38CY2DSwAaEffed6iMeflc0FMiuptanbN4J+ib+342gKGpvYRWubPd/+ sha512-QHEb6jOC8SaGTmYmGU19u2FhIfeG+t/hSacIWPpDzOp5yygnthL3JwnilM7LM1dOAbJv62R+/FICfsrKUqv4Gg==" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation-datepicker/1.5.0/css/foundation-datepicker.min.css">
 <style>
 	.ajustado {
-		max-width: 600px;
+		max-width: 80%;
 		margin: auto;
 	}
 </style>
 </head>
 <body>
 
-	<div class="ajustado">
-		<h2>Nuevo Empleado</h2>
-		<form action="#" th:action="@{/api/empleado}" th:object="${empleadoNuevoForm}" method="post" >
-			<input type="hidden" id="redirect" name="redirect" value="/home">
-			<label th:for="${#ids.next('adoNombre')}">Nombre</label>
-			<input type="text" th:field="*{adoNombre}" placeholder="Nombre">
-			<label th:for="${#ids.next('adoApPaterno')}">Apellido Paterno</label>
-			<input type="text" th:field="*{adoApPaterno}" placeholder="Apellido Parterno">
-			<label th:for="${#ids.next('adoApMaterno')}">Apellido Materno</label>
-			<input type="text" th:field="*{adoApMaterno}" placeholder="Apellido Materno">
-			<input type="submit" value="enviar" class="button large">
-		</form>
-	</div>
-	<div class="ajustado">
-		<h2>Empleados</h2>
-		<table>
-			<tr>
-				<th>ID</th>
-				<th>Nombre</th>
-				<th>Género</th>
-				<th>Fecha de Nacimiento</th>
-			</tr>
-			<tr th:each="empleado : ${empleados}">
-				<td th:text="${empleado.adoId}" />
-				<td th:text="${empleado.adoNombre} + ' ' + ${empleado.adoApPaterno} + ' ' + ${empleado.adoApMaterno}" />
-				<td th:text="${empleado.adoGenero}" />
-				<td th:text="${empleado.adoFechaNacimiento}" />
-			</tr>
-		</table>
+	<ul class="tabs" data-tabs id="example-tabs">
+	  <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Empleados</a></li>
+	  <li class="tabs-title"><a data-tabs-target="panel2" href="#panel2">Nuevo Empleado</a></li>
+	  <li class="tabs-title"><a data-tabs-target="panel3" href="#panel3">Proyectos</a></li>
+	  <li class="tabs-title"><a data-tabs-target="panel4" href="#panel4">Nuevo Proyecto</a></li>
+	  <li class="tabs-title"><a data-tabs-target="panel5" href="#panel5">Gastos</a></li>
+	  <li class="tabs-title"><a data-tabs-target="panel6" href="#panel6">Nuevo Gasto</a></li>
+	  <li class="tabs-title"><a data-tabs-target="panel7" href="#panel7">Asignar Empleado a Proyecto</a></li>
+	  <li class="tabs-title"><a data-tabs-target="panel8" href="#panel8">Asignar Gasto a Proyecto</a></li>
+	</ul>
+	
+	<div class="tabs-content" data-tabs-content="example-tabs">
+	  <div class="tabs-panel is-active" id="panel1">
+	    <div class="ajustado">
+			<h2>Empleados</h2>
+			<table>
+				<tr class="text-center">
+					<th>ID</th>
+					<th class="text-left">Nombre</th>
+					<th>Género</th>
+					<th>Fecha de Nacimiento</th>
+				</tr>
+				<tr class="text-center" th:each="empleado : ${empleados}">
+					<td th:text="${empleado.adoId}" />
+					<td class="text-left" th:text="${empleado.adoNombre} + ' ' + ${empleado.adoApPaterno} + ' ' + ${empleado.adoApMaterno}" />
+					<td th:text="${empleado.adoGenero}" />
+					<td th:text="${empleado.adoFechaNacimiento}" />
+				</tr>
+			</table>
+		</div>
+	  </div>
+	  <div class="tabs-panel" id="panel2">
+	    <div class="ajustado">
+			<h2>Nuevo Empleado</h2>
+			<form action="#" th:action="@{/api/empleado}" th:object="${empleadoNuevoForm}" method="post" >
+				<input type="hidden" id="redirect" name="redirect" value="/home">
+				<label th:for="${#ids.next('adoNombre')}">Nombre</label>
+				<input type="text" th:field="*{adoNombre}" placeholder="Nombre">
+				<label th:for="${#ids.next('adoApPaterno')}">Apellido Paterno</label>
+				<input type="text" th:field="*{adoApPaterno}" placeholder="Apellido Parterno">
+				<label th:for="${#ids.next('adoApMaterno')}">Apellido Materno</label>
+				<input type="text" th:field="*{adoApMaterno}" placeholder="Apellido Materno">
+				<input type="submit" value="enviar" class="button large">
+			</form>
+		</div>
+	  </div>
+	  <div class="tabs-panel" id="panel3">
+	    <div class="ajustado">
+			<h2>Proyectos</h2>
+			<table>
+				<tr class="text-center">
+					<th>ID</th>
+					<th class="text-left">Nombre</th>
+					<th>Fecha de Inicio</th>
+					<th>Fecha de Finalización</th>
+				</tr>
+				<tr class="text-center" th:each="proyecto : ${proyectos}">
+					<td th:text="${proyecto.ctoId}" />
+					<td class="text-left" th:text="${proyecto.ctoNombre}" />
+					<td th:text="${#dates.format(proyecto.ctoFechaInicio, 'dd/MM/yyyy')}" />
+					<td th:text="${#dates.format(proyecto.ctoFechaFin, 'dd/MM/yyyy')}" />
+				</tr>
+			</table>
+		</div>
+	  </div>
+	  <div class="tabs-panel" id="panel4">
+	    <div class="ajustado">
+			<h2>Nuevo Proyecto</h2>
+			<form action="#" th:action="@{/api/proyecto}" th:object="${proyectoNuevoForm}" method="post" >
+				<input type="hidden" id="redirect" name="redirect" value="/home#panel3">
+				<label th:for="${#ids.next('ctoNombre')}">Nombre</label>
+				<input type="text" th:field="*{ctoNombre}" placeholder="Nombre" required>
+				<label th:for="${#ids.next('ctoFechaInicio')}">Fecha de Inicio (dd/mm/yyyy)</label>
+				<input class="calendar" onkeyup="validarFecha(this)" type="text" th:field="*{ctoFechaInicio}" placeholder="Fecha de Inicio" required>
+				<label th:for="${#ids.next('ctoFechaFin')}">Fecha de Finalización  (dd/mm/yyyy)</label>
+				<input class="calendar" onkeyup="validarFecha(this)" type="text" th:field="*{ctoFechaFin}" placeholder="Fecha de Finalización">
+				<label th:for="${#ids.next('ctoAplicativo')}">Aplicativo</label>
+				<input type="text" th:field="*{ctoAplicativo}" placeholder="Aplicativo" required>
+				<label th:for="${#ids.next('ctoDescripcion')}">Descripción</label>
+				<input type="text" th:field="*{ctoDescripcion}" placeholder="Descripción">
+				<input type="submit" value="enviar" class="button large">
+			</form>
+		</div>
+	  </div>
 	</div>
 	
 	<!-- Compressed JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.4.3/dist/js/foundation.min.js" integrity="sha256-mRYlCu5EG+ouD07WxLF8v4ZAZYCA6WrmdIXyn1Bv9Vk= sha384-KzKofw4qqetd3kvuQ5AdapWPqV1ZI+CnfyfEwZQgPk8poOLWaabfgJOfmW7uI+AV sha512-0gHfaMkY+Do568TgjJC2iMAV0dQlY4NqbeZ4pr9lVUTXQzKu8qceyd6wg/3Uql9qA2+3X5NHv3IMb05wb387rA==" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/foundation-datepicker/1.5.0/js/foundation-datepicker.min.js"></script>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/plugins/foundation.tabs.js"></script> -->
+	<script>
+		$(document).foundation();
+		
+		window.prettyPrint && prettyPrint();
+		$('.calendar').fdatepicker({
+		  format: 'dd/mm/yyyy',
+		  disableDblClickSelection: true
+		});
+		
+		function validarFecha(el) {
+			if (!el.value.match(/\d{1,2}\/?$/)) {
+				el.value = el.value.slice(0, -1);
+				return;
+			}
+			if (el.value.match(/\d{5,}/)) {
+				el.value = el.value.slice(0, -1);
+			}
+		}
+	</script>
 </body>
 </html>

@@ -1,14 +1,19 @@
 package com.quat.api;
 
+import java.io.IOException;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,9 +34,18 @@ public class ProyectoApiController {
 	@Autowired
 	ProyectoDAO proyectoDao;
 
-	@PutMapping("")
-	public ProyectoDTO registrarProyecto(@ModelAttribute ProyectoDTO proyecto) {
-		return proyectoService.crearProyecto(proyecto);
+	@PostMapping("")
+	public ProyectoDTO registrarProyecto(@ModelAttribute ProyectoDTO proyecto,
+			@RequestParam(required=false) String redirect,
+			HttpServletResponse response,
+			BindingResult result) throws IOException {
+		ProyectoDTO proyectoNuevo = proyectoService.crearProyecto(proyecto);
+		
+		if (redirect != null) {
+			response.sendRedirect(redirect);
+		}
+		
+		return proyectoNuevo;
 	}
 
 	@PostMapping("/{id}/asignar/presupuesto")

@@ -1,6 +1,6 @@
 package com.quat.dto;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "Proyecto")
@@ -19,13 +21,18 @@ public class ProyectoDTO {
 
 	@NotNull
 	String ctoDescripcion;
+	
 	@NotNull
 	String ctoNombre;
+	
 	@NotNull
 	String ctoAplicativo;
+	
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@NotNull
 	Date ctoFechaInicio;
 
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	Date ctoFechaFin;
 
 	Double ctoPresupuesto;
