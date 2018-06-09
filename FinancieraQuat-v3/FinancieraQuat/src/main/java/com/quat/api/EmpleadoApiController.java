@@ -69,7 +69,9 @@ public class EmpleadoApiController {
 	 * 
 	 * }
 	 */
-	public EmpleadoDTO registrarEmpleado(@ModelAttribute EmpleadoDTO empleado, @RequestParam(required=false) String redirect, HttpServletResponse response) throws IOException {
+	public EmpleadoDTO registrarEmpleado(@ModelAttribute EmpleadoDTO empleado, 
+			@RequestParam(required=false) String redirect, 
+			HttpServletResponse response) throws IOException {
 		EmpleadoDTO empleadoNuevo = empleadoService.registrarEmpleado(empleado);
 		
 		if (redirect != null) {
@@ -82,7 +84,7 @@ public class EmpleadoApiController {
 	// Asignar una nomina mediante el id del empleado
 	@PostMapping("/{id}/asignar/nomina")
 	@ResponseBody
-	public EmpleadoDTO asignarNomina(@PathVariable Long id, @PathVariable String tipoNomina) {
+	public EmpleadoDTO asignarNomina(@PathVariable Long id, @RequestParam String tipoNomina) {
 		EmpleadoDTO empleado = new EmpleadoDTO();
 		try {
 			empleado = empleadoService.buscarEmpleado(id);
@@ -101,7 +103,7 @@ public class EmpleadoApiController {
 	// Asignar una Puesto mediante el id del empleado
 	@PostMapping("/{id}/asignar/puesto")
 	@ResponseBody
-	public EmpleadoDTO asignarPuesto(@PathVariable Long id, @PathVariable String puesto) {
+	public EmpleadoDTO asignarPuesto(@PathVariable Long id, @RequestParam String puesto) {
 		EmpleadoDTO empleado = new EmpleadoDTO();
 		try {
 			empleado = empleadoService.buscarEmpleado(id);
@@ -120,7 +122,7 @@ public class EmpleadoApiController {
 	// Asignar una Puesto mediante el id del empleado
 	@PostMapping("/{id}/asignar/sueldo")
 	@ResponseBody
-	public EmpleadoDTO asignarSueldo(@PathVariable Long id, @PathVariable Double sueldo) {
+	public EmpleadoDTO asignarSueldo(@PathVariable Long id, @RequestParam Double sueldo) {
 		EmpleadoDTO empleado = new EmpleadoDTO();
 		try {
 			empleado = empleadoService.buscarEmpleado(id);
@@ -137,9 +139,9 @@ public class EmpleadoApiController {
 	}
 
 	// Alta de asignacion
-	@PostMapping("/{idEmpleado,idProyecto}/alta/asignacion")
+	@PostMapping("/{idEmpleado}/alta/asignacion")
 	@ResponseBody
-	public EmpleadoDTO altaAsignacion(@PathVariable Long idEmpleado, @PathVariable Long idProyecto) {
+	public EmpleadoDTO altaAsignacion(@PathVariable Long idEmpleado, @RequestParam Long idProyecto) {
 		EmpleadoDTO empleado = new EmpleadoDTO();
 		ProyectoDTO proyecto = new ProyectoDTO();
 		empleado = empleadoService.buscarEmpleado(idEmpleado);

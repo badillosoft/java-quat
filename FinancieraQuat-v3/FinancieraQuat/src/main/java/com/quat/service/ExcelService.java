@@ -113,15 +113,25 @@ public class ExcelService {
 			row.createCell(2).setCellValue(empleado.getAdoApPaterno());
 			row.createCell(3).setCellValue(empleado.getAdoApMaterno());
 			row.createCell(4).setCellValue(empleado.getAdoDireccion());
-			row.createCell(5).setCellValue(empleado.getAdoTelefono());
-			row.createCell(6).setCellValue(empleado.getAdoGenero());
-			Cell fechaNacCell = row.createCell(7);
-			fechaNacCell.setCellStyle(cellDateStyle);
-			fechaNacCell.setCellValue(new java.util.Date(empleado.getAdoFechaNacimiento().getTime()));
-			row.createCell(8).setCellValue(empleado.getAdoCorreo());
-			Cell fechaIngCell = row.createCell(9);
-			fechaIngCell.setCellStyle(cellDateStyle);
-			fechaIngCell.setCellValue(new java.util.Date(empleado.getAdoFechaIngreso().getTime()));
+			if (empleado.getAdoTelefono() != null) {
+				row.createCell(5).setCellValue(empleado.getAdoTelefono());
+			}
+			if (empleado.getAdoGenero() != null) {
+				row.createCell(6).setCellValue(empleado.getAdoGenero());
+			}
+			if (empleado.getAdoFechaNacimiento() != null) {
+				Cell fechaNacCell = row.createCell(7);
+				fechaNacCell.setCellStyle(cellDateStyle);
+				fechaNacCell.setCellValue(new java.util.Date(empleado.getAdoFechaNacimiento().getTime()));
+			}
+			if (empleado.getAdoCorreo() != null) {
+				row.createCell(8).setCellValue(empleado.getAdoCorreo());
+			}
+			if (empleado.getAdoFechaIngreso() != null) {
+				Cell fechaIngCell = row.createCell(9);
+				fechaIngCell.setCellStyle(cellDateStyle);
+				fechaIngCell.setCellValue(new java.util.Date(empleado.getAdoFechaIngreso().getTime()));
+			}
 		}
 	}
 	

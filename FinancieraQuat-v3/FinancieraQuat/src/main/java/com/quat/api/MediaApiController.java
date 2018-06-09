@@ -43,8 +43,17 @@ public class MediaApiController {
 	}
 	
 	@PostMapping("")
-	public MediaDTO upload(@RequestParam MultipartFile file) throws IOException {
-		return mediaService.saveFile(file);
+	public MediaDTO upload(@RequestParam MultipartFile file,
+			@RequestParam(required=false) String redirect, 
+			HttpServletResponse response) throws IOException {
+		
+		MediaDTO media = mediaService.saveFile(file);
+		
+		if (redirect != null) {
+			response.sendRedirect(redirect);
+		}
+		
+		return media;
 	}
 	
 	@GetMapping("/{uuid}")

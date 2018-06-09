@@ -25,10 +25,16 @@ public class ExcelApiController {
 	ExcelService excelService;
 	
 	@GetMapping("/load/empleados")
-	public String loadEmpleado(@RequestParam String uuid) {
+	public String loadEmpleado(@RequestParam String uuid,
+			@RequestParam(required=false) String redirect, 
+			HttpServletResponse response) throws IOException {
 		
 		try {
 			excelService.loadEmpleado(uuid);
+			
+			if (redirect != null) {
+				response.sendRedirect(redirect);
+			}
 		} catch(Exception e) {
 			return e.getMessage();
 		}

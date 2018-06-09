@@ -15,6 +15,45 @@
 </head>
 <body>
 
+	<div class="reveal" id="empleadoNominaForm" data-reveal>
+	  <h1>Asignar Nómina</h1>
+	  <form method="post" class="idEmpleadoAction" action="/api/empleado/@/asignar/nomina">
+	  	<input class="idEmpleado" type="number" id="empleadoNominaForm_id" name="empleadoNominaForm_id" value="id" disabled>
+	  	<input id="tipoNomina" type="text" name="tipoNomina" placeholder="Tipo de nómina">
+	  	<input class="button" type="submit" value="enviar">
+	  </form>
+	</div>
+	
+	<div class="reveal" id="empleadoPuestoForm" data-reveal>
+	  <h1>Asignar Puesto</h1>
+	  <form method="post" class="idEmpleadoAction" action="/api/empleado/@/asignar/puesto">
+	  	<input class="idEmpleado" type="number" id="empleadoNominaForm_id" name="empleadoNominaForm_id" value="id" disabled>
+	  	<input id="puesto" type="text" name="puesto" placeholder="Tipo de puesto">
+	  	<input class="button" type="submit" value="enviar">
+	  </form>
+	</div>
+	
+	<div class="reveal" id="empleadoSueldoForm" data-reveal>
+	  <h1>Asignar Sueldo</h1>
+	  <form method="post" class="idEmpleadoAction" action="/api/empleado/@/asignar/sueldo">
+	  	<input class="idEmpleado" type="number" id="empleadoNominaForm_id" name="empleadoNominaForm_id" value="id" disabled>
+	  	<input id="sueldo" type="number" name="sueldo" placeholder="Sueldo">
+	  	<input class="button" type="submit" value="enviar">
+	  </form>
+	</div>
+	
+	<div class="reveal" id="empleadoProyectoForm" data-reveal>
+	  <h1>Asignar Proyecto</h1>
+	  <form method="post" class="idEmpleadoAction" action="/api/empleado/@/alta/asignacion">
+	  	<input class="idEmpleado" type="number" id="empleadoNominaForm_id" name="empleadoNominaForm_id" value="id" disabled>
+	  	<select id="idProyecto" name="idProyecto">
+	  		<option th:each="proyecto : ${proyectos}" th:value="${proyecto.ctoId}" th:text="${proyecto.ctoNombre}"></option>
+	  	</select>
+	  	<input class="button" type="submit" value="enviar">
+	  </form>
+	</div>
+
+
 	<ul class="tabs" data-tabs id="example-tabs">
 	  <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Empleados</a></li>
 	  <li class="tabs-title"><a data-tabs-target="panel2" href="#panel2">Nuevo Empleado</a></li>
@@ -24,6 +63,8 @@
 	  <li class="tabs-title"><a data-tabs-target="panel6" href="#panel6">Nuevo Gasto</a></li>
 	  <li class="tabs-title"><a data-tabs-target="panel7" href="#panel7">Asignar Empleado a Proyecto</a></li>
 	  <li class="tabs-title"><a data-tabs-target="panel8" href="#panel8">Asignar Gasto a Proyecto</a></li>
+	  <li class="tabs-title"><a data-tabs-target="panel9" href="#panel9">Archivos</a></li>
+	  <li class="tabs-title"><a data-tabs-target="panel10" href="#panel10">Importar / Exportar</a></li>
 	</ul>
 	
 	<div class="tabs-content" data-tabs-content="example-tabs">
@@ -36,12 +77,19 @@
 					<th class="text-left">Nombre</th>
 					<th>Género</th>
 					<th>Fecha de Nacimiento</th>
+					<th>Opciones</th>
 				</tr>
 				<tr class="text-center" th:each="empleado : ${empleados}">
 					<td th:text="${empleado.adoId}" />
 					<td class="text-left" th:text="${empleado.adoNombre} + ' ' + ${empleado.adoApPaterno} + ' ' + ${empleado.adoApMaterno}" />
 					<td th:text="${empleado.adoGenero}" />
 					<td th:text="${empleado.adoFechaNacimiento}" />
+					<td class="text-left">
+						<button th:onclick="'javascript:setEmpleadoId(\'' + ${empleado.adoId} + '\');'"  class="button small" data-open="empleadoNominaForm">Nómina</button>
+						<button th:onclick="'javascript:setEmpleadoId(\'' + ${empleado.adoId} + '\');'"  class="button small" data-open="empleadoPuestoForm">Puesto</button>
+						<button th:onclick="'javascript:setEmpleadoId(\'' + ${empleado.adoId} + '\');'"  class="button small" data-open="empleadoSueldoForm">Sueldo</button>
+						<button th:onclick="'javascript:setEmpleadoId(\'' + ${empleado.adoId} + '\');'"  class="button small" data-open="empleadoProyectoForm">Proyecto</button>
+					</td>
 				</tr>
 			</table>
 		</div>
@@ -99,6 +147,52 @@
 			</form>
 		</div>
 	  </div>
+	  <div class="tabs-panel" id="panel9">
+	    <div class="ajustado">
+			<h2>Archivos</h2>
+			<table>
+				<tr class="text-center">
+					<th class="text-left">UUID</th>
+					<th class="text-left">Nombre</th>
+					<th>Fecha de Subida</th>
+					<th>Opciones</th>
+				</tr>
+				<tr class="text-center" th:each="media : ${medias}">
+					<td class="text-left" th:text="${media.diaUuid}" />
+					<td class="text-left" th:text="${media.diaFilename}" />
+					<td th:text="${#dates.format(media.diaUploadAt, 'dd/MM/yyyy HH:mm:ss')}" />
+					<td>
+						<form th:if="${media.diaExtension == 'xlsx'}" action="/api/excel/load/empleados">
+							<input type="hidden" id="redirect" name="redirect" value="/home">
+							<input id="uuid" name="uuid" type="hidden" th:value="${media.diaUuid}">
+							<input class="button small expanded secondary" type="submit" value="importar">
+						</form>
+						<form th:action="${'/api/media/' + media.diaUuid + '/download'}">
+							<input class="button small expanded" type="submit" value="descargar">
+						</form>
+					</td>
+				</tr>
+			</table>
+		</div>
+	  </div>
+	  <div class="tabs-panel" id="panel10">
+	    <div class="ajustado">
+			<h2>Importar Excel</h2>
+			<form action="/api/media" method="post" enctype="multipart/form-data">
+				<input type="hidden" id="redirect" name="redirect" value="/home">
+				<label th:for="${#ids.next('ctoNombre')}">Seleccionar achivo</label>
+				<input accept=".xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" id="file" name="file" type="file" placeholder="Selecciona un archivo" required>
+				<input type="submit" value="enviar" class="button large">
+			</form>
+		</div>
+		<div class="ajustado">
+			<h2>Exportar a Excel</h2>
+			<form action="/api/excel/download" method="get">
+				<input type="hidden" id="redirect" name="redirect" value="/home">
+				<input type="submit" value="descargar" class="button large success">
+			</form>
+		</div>
+	  </div>
 	</div>
 	
 	<!-- Compressed JavaScript -->
@@ -114,6 +208,16 @@
 		  format: 'dd/mm/yyyy',
 		  disableDblClickSelection: true
 		});
+		
+		function setEmpleadoId(id) {
+			console.log("Seleccionar empleado:", id);
+			$(".idEmpleado").each(function () {
+				this.value = id;
+			});
+			$(".idEmpleadoAction").each(function () {
+				this.action = this.action.replace("@", id);
+			});
+		}
 		
 		function validarFecha(el) {
 			if (!el.value.match(/\d{1,2}\/?$/)) {
